@@ -81,7 +81,7 @@ bool SinglyLinkedList::insertBefore(const int subsequentData, const int insertDa
 
     //iterates until subsequent node is found
     Node* currentNode = head;
-    while (currentNode) {
+    while (currentNode->next) {
         if (currentNode->next->data == subsequentData) {
             //initialize new node
             Node* newNode = new Node(insertData);
