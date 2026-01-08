@@ -64,9 +64,6 @@ bool SinglyLinkedList::insertAfter(const int precedingData, const int insertData
 
 //find node that matches specified data 
 SinglyLinkedList::Node* SinglyLinkedList::findNode(const int data) {
-    //list is empty, no data
-    if (!head) return nullptr;
-
     //iterates until a match is found
     Node* currentNode = head;
     while (currentNode) {
@@ -74,7 +71,7 @@ SinglyLinkedList::Node* SinglyLinkedList::findNode(const int data) {
         currentNode = currentNode->next;
     }
 
-    //returns Node* that matches data
+    //returns nullptr (no match found)
     return currentNode;
 }
 
@@ -111,14 +108,14 @@ bool SinglyLinkedList::deleteData(const int data) {
 
 //delete beginning
 bool SinglyLinkedList::deleteHead() {
-    //list is empty, no operation necessary
+    //list is empty, no deletion necessary
     if (!head) return false;
 
-    //temp Node* to be deleted
+    //temp Node* to store current head's address
     Node* tempHead = head;
     //second node in list becomes head
     head = tempHead->next;
-    //finally delete head
+    //finally delete old head
     delete tempHead;
 
     return true;
@@ -126,7 +123,7 @@ bool SinglyLinkedList::deleteHead() {
 
 //delete end
 bool SinglyLinkedList::deleteEnd() {
-    //list is empty, no operation necessary
+    //list is empty, no deletion necessary
     if (!head) return false;
 
     //iterates until end is reached
@@ -143,6 +140,9 @@ bool SinglyLinkedList::deleteEnd() {
         currentNode = currentNode->next;
     }
 
+    //there is only head
+    delete currentNode;
+    head = nullptr;
     return true;
 }
 
@@ -152,7 +152,7 @@ void SinglyLinkedList::print() {
 
     //list is empty, no data to print
     if (!head) {
-        std::cout << "list is empty" << std::endl;
+        std::cout << "list is empty\n" << std::endl;
         return;
     }
 
@@ -163,4 +163,11 @@ void SinglyLinkedList::print() {
         currentNode = currentNode->next;
     }
     std::cout << "nullptr\n" << std::endl;
+}
+
+void SinglyLinkedList::clear() {
+    //deletes heads until list is empty
+    while (head) {
+        deleteHead();
+    }
 }
