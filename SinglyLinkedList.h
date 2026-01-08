@@ -21,7 +21,7 @@ private:
 
 public:
     //constructor
-    SinglyLinkedList() : head(nullptr) {}
+    SinglyLinkedList() : head(nullptr) {};
 
     //destructor
     ~SinglyLinkedList();
@@ -33,22 +33,22 @@ public:
     void insertAsEnd(const int data);
 
     //insert after preceding data
-    bool insertAfter(const int precedingData, const int data);
+    bool insertAfter(const int precedingData, const int insertData);
 
     //find node that matches specified data 
     Node* findNode(const int data);
 
     //find if data exists in list
-    bool findData(const in data);
+    bool findData(const int data);
 
     //delete specified data
     bool deleteData(const int data);
 
     //delete beginning
-    void deleteHead();
+    bool deleteHead();
 
     //delete end
-    void deleteEnd();
+    bool deleteEnd();
 
     //prints list to terminal
     void print();
