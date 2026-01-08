@@ -52,6 +52,9 @@ public:
 
     //prints list to terminal
     void print();
+
+    //reset list
+    void clear();
 };
 
 #endif
