@@ -1,7 +1,8 @@
 #include "SinglyLinkedList.h"
+#include <iostream>
 
 //destructor
-~SinglyLinkedList() {
+SinglyLinkedList::~SinglyLinkedList() {
     //deletes heads until list is empty
     while (head) {
         deleteHead();
@@ -9,7 +10,7 @@
 }
 
 //insert at beginning
-void insertAsHead(const int data) {
+void SinglyLinkedList::insertAsHead(const int data) {
     //initialize new node
     Node* newNode = new Node(data);
 
@@ -21,7 +22,7 @@ void insertAsHead(const int data) {
 }
     
 //insert at end
-void insertAsEnd(const int data) {
+void SinglyLinkedList::insertAsEnd(const int data) {
     //initialize new node
     Node* newNode = new Node(data);
 
@@ -31,23 +32,26 @@ void insertAsEnd(const int data) {
     else {
         Node* currentNode = head;
         while (currentNode) {
-            if (!currentNode->next) currentNode->next = newNode;
-            else currentNode = currentNode->next;
+            if (!currentNode->next) {
+                currentNode->next = newNode;
+                return;
+            }
+            currentNode = currentNode->next;
         }
     }
 
 }
 
 //insert after preceding data
-bool insertAfter(const int precedingData, const int insertData) {
+bool SinglyLinkedList::insertAfter(const int precedingData, const int insertData) {
     //Node* that matches preceding data
-    Node* precedingNode = findData(precedingData);
+    Node* precedingNode = findNode(precedingData);
 
     //could not find node with matching preceding data, therefore can't insert
-    if (precedingNode) return false;
-
+    if (!precedingNode) return false;
+    
     //initialize new node
-    Node* newNode = new Node(data);
+    Node* newNode = new Node(insertData);
 
     //new node points to subsequent node
     newNode->next = precedingNode->next;
@@ -59,7 +63,7 @@ bool insertAfter(const int precedingData, const int insertData) {
 }
 
 //find node that matches specified data 
-Node* findNode(const int data) {
+SinglyLinkedList::Node* SinglyLinkedList::findNode(const int data) {
     //list is empty, no data
     if (!head) return nullptr;
 
@@ -75,13 +79,13 @@ Node* findNode(const int data) {
 }
 
 //find if data exists in list
-bool findData(const in data) {
+bool SinglyLinkedList::findData(const int data) {
     if (findNode(data)) return true;
     return false;
 }
 
 //delete specified data
-bool deleteData(const int data) {
+bool SinglyLinkedList::deleteData(const int data) {
     //list is empty, no data to delete
     if (!head) return false;
     
@@ -101,33 +105,51 @@ bool deleteData(const int data) {
         currentNode = currentNode->next;
     }
 
-    //data could not be found
+    //no match
     return false;
 }
 
 //delete beginning
-void deleteHead() {
+bool SinglyLinkedList::deleteHead() {
+    //list is empty, no operation necessary
+    if (!head) return false;
+
     //temp Node* to be deleted
     Node* tempHead = head;
     //second node in list becomes head
     head = tempHead->next;
     //finally delete head
     delete tempHead;
+
+    return true;
 }
 
 //delete end
-void deleteEnd() {
+bool SinglyLinkedList::deleteEnd() {
+    //list is empty, no operation necessary
+    if (!head) return false;
+
     //iterates until end is reached
     Node* currentNode = head;
-    while (currentNode) {
-        if (!currentNode->next) delete currentNode;
-        else currentNode = currentNode->next;
+    while (currentNode->next) {
+        if (!currentNode->next->next) {
+            //delete end
+            delete currentNode->next;
+            //new end points to nullptr
+            currentNode->next = nullptr;
+            return true;
+        }
+
+        currentNode = currentNode->next;
     }
+
+    return true;
 }
 
 //print to terminal
-void print() {
+void SinglyLinkedList::print() {
     std::cout << "SLL: ";
+
     //list is empty, no data to print
     if (!head) {
         std::cout << "list is empty" << std::endl;
@@ -137,8 +159,8 @@ void print() {
     //iterates until end is reached
     Node* currentNode = head;
     while (currentNode) {
-        std::cout << currentNode->data << " ";
+        std::cout << currentNode->data << " -> ";
         currentNode = currentNode->next;
     }
-    std::cout << std::endl;
+    std::cout << "nullptr\n" << std::endl;
 }
