@@ -62,9 +62,47 @@ bool SinglyLinkedList::insertAfter(const int precedingData, const int insertData
     return true;
 }
 
+ //insert before subsequent data
+bool SinglyLinkedList::insertBefore(const int subsequentData, const int insertData) {
+    //empty list
+    if (!head) return false;
+
+    //new node comes before the head
+    if (head->data == subsequentData) {
+        //initialize new node
+        Node* newNode = new Node(insertData);
+        //new node points to head
+        newNode->next = head;
+        //new node becomes head
+        head = newNode;
+
+        return true;
+    }
+
+    //iterates until subsequent node is found
+    Node* currentNode = head;
+    while (currentNode) {
+        if (currentNode->next->data == subsequentData) {
+            //initialize new node
+            Node* newNode = new Node(insertData);
+            //new node points to subsequent node
+            newNode->next = currentNode->next;
+            //left neighbor points to new node
+            currentNode->next = newNode;
+            
+            return true;
+        }
+
+        currentNode = currentNode->next;
+    }
+
+    //no match for subsequent data
+    return false;
+}
+
 //find node that matches specified data 
 SinglyLinkedList::Node* SinglyLinkedList::findNode(const int data) {
-    //iterates until a match is found
+    //iterates until a match is reached
     Node* currentNode = head;
     while (currentNode) {
         if (currentNode->data == data) return currentNode;

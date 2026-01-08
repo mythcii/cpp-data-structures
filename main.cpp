@@ -2,7 +2,7 @@
 #include <string>
 
 #include "SinglyLinkedList.h"
-#include "DoublyLinkedList.h"
+//#include "DoublyLinkedList.h"
 
 void testSinglyLinkedList();
 
@@ -52,7 +52,20 @@ void testSinglyLinkedList() {
     std::cout << output;
     sll.print();
 
-    //Case 5: Deletetions
+    //Case 5: Insert before specified data
+    std::cout << "INSERT X BEFORE Y\n";
+    //insert before a middle node
+    output = sll.insertBefore(0, 7) ? "7 inserted before 0\n" : "0 not found, 7 not inserted\n";
+    //insert before head
+    output += sll.insertBefore(1, 8) ? "8 inserted before 1\n" : "1 not found, 8 not inserted\n";
+    //insert before end
+    output += sll.insertBefore(6, 9) ? "9 inserted before 6\n" : "6 not found, 9 not inserted\n";
+    //insert before non-existing data
+    output += sll.insertBefore(644, 10) ? "10 inserted before 644\n" : "644 not found, 10 not inserted\n";
+    std::cout << output;
+    sll.print();
+
+    //Case 6: Deletetions
     std::cout << "DELETIONS\n";
     //delete existing data
     output = sll.deleteData(0) ? "0 deleted\n" : "0 not found, thus not deleted\n";
@@ -65,7 +78,7 @@ void testSinglyLinkedList() {
     std::cout << output;
     sll.print();
 
-    //Case 6: Clear and inserting at end to empty list
+    //Case 7: Clear and inserting at end to empty list
     std::cout << "LIST CLEARED\n";
     sll.clear();
     sll.print();
@@ -73,7 +86,7 @@ void testSinglyLinkedList() {
     sll.insertAsEnd(0);
     sll.print();
 
-    //Case 7: Delete end/head with only one node
+    //Case 8: Delete end/head with only one node
     std::cout << "HEAD/END DELETIONS WITH ONLY ONE NODE IN LIST\n";
     sll.deleteHead() ? std::cout << "Head deleted\n" : std::cout << "List empty, no head to delete\n";
     sll.print();

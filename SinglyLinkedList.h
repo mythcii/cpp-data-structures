@@ -35,6 +35,9 @@ public:
     //insert after preceding data
     bool insertAfter(const int precedingData, const int insertData);
 
+    //insert before subsequent data
+    bool insertBefore(const int subsequentData, const int insertData);
+
     //find node that matches specified data 
     Node* findNode(const int data);
 
