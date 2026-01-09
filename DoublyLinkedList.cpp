@@ -4,9 +4,7 @@
 //destructor
 DoublyLinkedList::~DoublyLinkedList() {
     //deletes heads until list is empty
-    while (head) {
-        deleteHead();
-    }
+    clear();
 }
 
 //insert at beginning
@@ -25,13 +23,15 @@ void DoublyLinkedList::insertAsHead(const int data) {
 }
 
 //insert at end
-void insertAsEnd(const int data) {
+void DoublyLinkedList::insertAsEnd(const int data) {
+    //initialize new node
     Node* newNode = new Node(data);
 
     //list is empty, so node becomes the head
     if (!head) head = newNode;
     //iterates until end node is reached
     else {
+        Node* currentNode = head;
         while (currentNode) {
             if (!currentNode->next) {
                 //link bidirectionally
@@ -59,10 +59,14 @@ bool DoublyLinkedList::insertAfter(const int precedingData, const int insertData
     newNode->previous = precedingNode;
     newNode->next = precedingNode->next;
 
-    //preceding node points to new node
+    //link neighboring nodes' pointers to new node
+    if (precedingNode->next) precedingNode->next->previous = newNode;
     precedingNode->next = newNode;
+
+    return true;
 }
 
+//FIXME
 //insert before subsequent data
 bool DoublyLinkedList::insertBefore(const int subsequentData, const int insertData) {
     //Node* that matches preceding data
@@ -74,12 +78,15 @@ bool DoublyLinkedList::insertBefore(const int subsequentData, const int insertDa
     //initialize new node
     Node* newNode = new Node(insertData);
 
-    //link new node to neighboring nodes
+    //link new node's pointers to neighboring nodes
     newNode->previous = subsequentNode->previous;
     newNode->next = subsequentNode;
 
-    //subsequent node's previous becomes new node
+    //link neighboring nodes' pointers to new node
+    subsequentNode == head ? head = newNode : subsequentNode->previous->next = newNode;
     subsequentNode->previous = newNode;
+
+    return true;
 }
 
 //find node that matches specified data 
@@ -101,6 +108,7 @@ bool DoublyLinkedList::findData(const int data) {
     return false;
 }
 
+//FIXME
 //delete specified data
 bool DoublyLinkedList::deleteData(const int data) {
     //Node to be deleted
@@ -126,10 +134,10 @@ bool DoublyLinkedList::deleteData(const int data) {
 
 //delete beginning
 bool DoublyLinkedList::deleteHead() {
-    //case 1: list is empty, no deletion necessary
+    //list is empty, no deletion necessary
     if (!head) return false;
 
-    //case 2: there is a node after head
+    //there is a node after head
     if (head->next) {
         //temp Node* to store current head's address
         Node* tempHead = head;
@@ -140,7 +148,7 @@ bool DoublyLinkedList::deleteHead() {
         //finally delete old head
         delete tempHead;
     }
-    //case 3: there is only head
+    //there is only head
     else {
         //becomes empty list
         delete head;
@@ -174,6 +182,30 @@ bool DoublyLinkedList::deleteEnd() {
 }
 
 //prints list to terminal
-void DoublyLinkedList::print() {
+void DoublyLinkedList::print(bool nullptrVisibility) {
+    std::cout << "DLL: ";
 
+    //no data to print
+    if (!head) {
+        std:: cout << "list is empty\n" << std::endl;
+        return;
+    }
+
+    //iterates until end is reached
+    Node* currentNode = head;
+    if (nullptrVisibility) std::cout << "nullptr <- ";
+    while (currentNode) {
+        std::cout << currentNode->data;
+        if (currentNode->next) std::cout << " <-> ";
+        currentNode = currentNode-> next;
+    }
+    if (nullptrVisibility) std::cout << "-> nullptr";
+    std::cout << "\n\n";
+}
+
+//resets list
+void DoublyLinkedList::clear() {
+    while (head) {
+        deleteHead();
+    }
 }

@@ -16,7 +16,7 @@ class DoublyLinkedList {
 
         //constructor
         Node(int data) : data(data), next(nullptr), previous(nullptr) {};
-    }
+    };
 
     //head of list
     Node* head;
@@ -56,8 +56,10 @@ class DoublyLinkedList {
     bool deleteEnd();
 
     //prints list to terminal
-    void print();
+    void print(bool nullptrVisibility = false);
 
+    //resets list
+    void clear();
 };
 
 #endif
