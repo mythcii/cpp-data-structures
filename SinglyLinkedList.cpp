@@ -4,9 +4,7 @@
 //destructor
 SinglyLinkedList::~SinglyLinkedList() {
     //deletes heads until list is empty
-    while (head) {
-        deleteHead();
-    }
+    clear();
 }
 
 //insert at beginning
@@ -69,13 +67,7 @@ bool SinglyLinkedList::insertBefore(const int subsequentData, const int insertDa
 
     //new node comes before the head
     if (head->data == subsequentData) {
-        //initialize new node
-        Node* newNode = new Node(insertData);
-        //new node points to head
-        newNode->next = head;
-        //new node becomes head
-        head = newNode;
-
+        insertAsHead(insertData);
         return true;
     }
 
@@ -188,7 +180,7 @@ bool SinglyLinkedList::deleteEnd() {
 void SinglyLinkedList::print() {
     std::cout << "SLL: ";
 
-    //list is empty, no data to print
+    //no data to print
     if (!head) {
         std::cout << "list is empty\n" << std::endl;
         return;
@@ -203,6 +195,7 @@ void SinglyLinkedList::print() {
     std::cout << "nullptr\n" << std::endl;
 }
 
+//resets list
 void SinglyLinkedList::clear() {
     //deletes heads until list is empty
     while (head) {
