@@ -177,7 +177,7 @@ bool SinglyLinkedList::deleteEnd() {
 }
 
 //print to terminal
-void SinglyLinkedList::print() {
+void SinglyLinkedList::print(bool nullptrVisibility) {
     std::cout << "SLL: ";
 
     //no data to print
@@ -188,11 +188,20 @@ void SinglyLinkedList::print() {
 
     //iterates until end is reached
     Node* currentNode = head;
-    while (currentNode) {
-        std::cout << currentNode->data << " -> ";
-        currentNode = currentNode->next;
+    if (nullptrVisibility) {
+        while (currentNode) {
+            std::cout << currentNode->data << " -> ";
+            currentNode = currentNode->next;
+        }
+        std::cout << "nullptr\n\n";
     }
-    std::cout << "nullptr\n" << std::endl;
+    else {
+        while (currentNode) {
+            std::cout << currentNode->data;
+            currentNode->next ? std::cout << " -> " : std::cout << "\n\n";
+            currentNode = currentNode->next;
+        }
+    }
 }
 
 //resets list

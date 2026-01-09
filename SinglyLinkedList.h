@@ -54,7 +54,7 @@ public:
     bool deleteEnd();
 
     //prints list to terminal
-    void print();
+    void print(bool nullptrVisibility = false);
 
     //reset list
     void clear();
